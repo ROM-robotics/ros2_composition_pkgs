@@ -54,7 +54,7 @@ public:
     // rclcpp::KeepAll{} if the user wishes.
     // (rclcpp::KeepLast(7) -> rclcpp::KeepAll() fails to compile)
     rclcpp::QoS qos(rclcpp::KeepLast{7});
-    pub_ = this->create_publisher<std_msgs::msg::String>("chatter", qos);
+    pub_ = this->create_publisher<std_msgs::msg::String>("talker_message", qos);
 
     // Use a timer to schedule periodic message publishing.
     timer_ = this->create_wall_timer(1s, publish_message);

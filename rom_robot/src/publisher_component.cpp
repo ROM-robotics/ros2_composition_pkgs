@@ -31,7 +31,7 @@ namespace rom_robot
 // Components get built into shared libraries and as such do not write their own main functions.
 // The process using the component's shared library will instantiate the class as a ROS node.
 Mypublisher::Mypublisher(const rclcpp::NodeOptions & options)
-: Node("talker", options), count_(0)
+: Node("publisher", options), count_(0)
 {
   // Create a publisher of "std_mgs/String" messages on the "chatter" topic.
   pub_ = create_publisher<std_msgs::msg::String>("chatter", 10);

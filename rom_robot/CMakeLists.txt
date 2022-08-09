@@ -13,23 +13,23 @@ find_package(rcutils REQUIRED)
 find_package(rmw REQUIRED)
 find_package(rmw_implementation_cmake REQUIRED)
 find_package(std_msgs REQUIRED)
-
+find_package(geometry_msgs REQUIRED)
 # ===================================== START ROM CODE ================================= #
 include_directories(include)
 
 # ---------------- topic library ----------------
-add_library(topics_library SHARED
+add_library(talker_library SHARED
   src/talker.cpp
 )
 # target_compile_definitions(${library}
 #   PRIVATE "ROM_COMPOSITION_NODE_BUILDING_DLL")
-ament_target_dependencies(topics_library
+ament_target_dependencies(talker_library
     "rclcpp"
     "rclcpp_components"
     "std_msgs"
 )
 rclcpp_components_register_node(
-  topics_library
+  talker_library
   PLUGIN "rom_robot::Talker"
   EXECUTABLE talker
 )
@@ -47,7 +47,7 @@ ament_target_dependencies(publisher_component
 rclcpp_components_register_node(
   publisher_component
   PLUGIN "rom_robot::Mypublisher"
-  EXECUTABLE publisherrr                              # :)
+  EXECUTABLE publisher_test                              # :)
   )
 
 # ------------ Listener component --------------
@@ -63,13 +63,32 @@ ament_target_dependencies(listenerr_component
 rclcpp_components_register_node(
   listenerr_component
   PLUGIN "rom_robot::Listener"
-  EXECUTABLE listener
+  EXECUTABLE listener_test
+  )
+
+# ------------ GoTurtle --------------
+add_library(go_away SHARED               
+  src/go_turtle.cpp
+)
+# target_compile_definitions(talker_component
+#   PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(go_away
+  "rclcpp"
+  "rclcpp_components"
+  "std_msgs"
+  "geometry_msgs")
+rclcpp_components_register_node(
+  go_away
+  PLUGIN "rom_robot::GoTurtle"
+  EXECUTABLE go_away_blabla
   )
 
 # ---------------- INSTALL -----------------
 install(TARGETS
-  topics_library
+  go_away
+  talker_library
   publisher_component
+  listenerr_component
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
